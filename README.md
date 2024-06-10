@@ -29,4 +29,20 @@ Raw data combined: "DD_full_data_Lsd_20.dat"<br/>
 Next 501 columns: potential profile<br/>
 Next 501 columns: charge profile<br/>
 
-**All raw data available in "DD_Data.tar.xz"
+**All raw data are available in "DD_Data.tar.xz"
+
+
+Loss trajectory: "loss_traj_1D_Poi_Cont*.pkl"<br/>
+--------------------------------------------------
+PINN Model loss trajectory: loss_traj_1D_Poi_Cont.pkl<br/>
+Refined PINN Model loss trajectory: loss_traj_1D_Poi_Cont_with_Neumann_BC.pkl<br/>
+
+**All loss trajectory data are available in "loss.tar.xz"
+
+
+Trained model parameters: "params_1D_Poi_Cont*.pkl"<br/>
+--------------------------------------------------
+PINN Model trained model parameters: params_1D_Poi_Cont.pkl<br/>
+Refined PINN Model trained model parameters: params_1D_Poi_Cont_with_Neumann_BC.pkl<br/>
+
+**All trained model parameters are available in "params.tar.xz"
