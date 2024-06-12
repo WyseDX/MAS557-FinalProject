@@ -92,7 +92,7 @@ def mse_cont(params, x, Nd, Vd_vec):
     
     res = pred_x[:,1] * pred_x[:,0] + pred_xx[:,0] - KT_Q * ( (pred_x[:, 0])**2 + pred_xx[:, 1] )
 
-    mse = ((res) ** 2).mean() * 1e2
+    mse = ((res) ** 2).mean()
     return mse
 
 @jax.jit 
@@ -131,7 +131,7 @@ def mse_bc(params, x, Nd, Vd_vec, Nsd, Vd):
     
 @jax.jit
 def mse_total(params, x, Nd, Vd_vec, train_charge_list, train_pot_list, Nsd, Vd):
-    w_cont = 1
+    w_cont = 1e2
     w_poi = 1
     w_bc = 1
     w_data = 1
