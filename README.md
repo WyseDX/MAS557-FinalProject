@@ -1,6 +1,6 @@
 Please install the following packages to run the python codes: jax, jaxopt, matplotlib, numpy, time, pickle, os, random, itertools
 
-This code can be run on Google Colab, after installing jaxopt by executing the following:
+Model training was done on a P100 GPU using double precision. This code can normally be run on Google Colab (Tested on A1000 settings), after installing jaxopt by executing the following:
 
 !pip install —quiet git+https://github.com/google/jaxopt.git
 
