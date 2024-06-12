@@ -10,9 +10,9 @@ A 4 hidden layer PINN model used to solve the Poission & Continuity equations si
 Input layer consists of the positional coordinates x, and applied voltage profile Va.
 
 
-Refined PINN Model: "1D_Poi_Cont_with_Neumann_BC.py"
+Refined PINN Model: "1D_Poi_Cont_with_interface_BC.py"
 --------------------------------------------------
-Refined PINN model accounting for potential and charge continuity at source/channel and channel/drain boundaries.
+Refined PINN model accounting for potential and charge continuity at source/channel and channel/drain interfaces.
 
 
 Numerical simulation: "DD_simulation_1D.m"
