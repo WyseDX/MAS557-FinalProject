@@ -49,7 +49,7 @@ Next 501 columns: charge profile<br/>
 Loss trajectory: "loss_traj_1D_Poi_Cont*.pkl"<br/>
 --------------------------------------------------
 PINN Model loss trajectory: loss_traj_1D_Poi_Cont.pkl<br/>
-Refined PINN Model loss trajectory: loss_traj_1D_Poi_Cont_with_Neumann_BC.pkl<br/>
+Refined PINN Model loss trajectory: loss_traj_1D_Poi_Cont_with_interface_BC.pkl<br/>
 
 **All loss trajectory data are available in "loss.tar.xz"
 
@@ -57,6 +57,6 @@ Refined PINN Model loss trajectory: loss_traj_1D_Poi_Cont_with_Neumann_BC.pkl<br
 Trained model parameters: "params_1D_Poi_Cont*.pkl"<br/>
 --------------------------------------------------
 PINN Model trained model parameters: params_1D_Poi_Cont.pkl<br/>
-Refined PINN Model trained model parameters: params_1D_Poi_Cont_with_Neumann_BC.pkl<br/>
+Refined PINN Model trained model parameters: params_1D_Poi_Cont_with_interface_BC.pkl<br/>
 
 **All trained model parameters are available in "params.tar.xz"
