@@ -1,15 +1,5 @@
-Please install the following packages to run the python codes. 
-import jax
-import jax.numpy as jnp
-import jax.random as jr
-import jaxopt
-import matplotlib.pyplot as plt
-import numpy as np
-import time
-import pickle
-import os
-import random
-import itertools
+Please install the following packages to run the python codes: jax, jaxopt, matplotlib, numpy, time, pickle, os, random, itertools
+
 
 PINN Model: "1D_Poi_Cont.py"
 --------------------------------------------------
