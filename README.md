@@ -1,7 +1,6 @@
 Please install the following packages to run the python codes: jax, jaxopt, matplotlib, numpy, time, pickle, os, random, itertools
 
-For instance, to run this code on Google Colab, jaxopt needs to be installed using:
-
+This code can be run on Google Colab, after installing jaxopt by executing the following:
 !pip install —quiet git+https://github.com/google/jaxopt.git
 
 
