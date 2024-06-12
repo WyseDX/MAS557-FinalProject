@@ -179,7 +179,7 @@ def get_train_profile(train_data, Vd_list):
     return jnp.array(train_pot_list), jnp.array(train_charge_list)
 
 
-# Import training data (Need to specify the correct directory to run this)
+# Import training data (Need to specify the correct directory with the data file to run this)
 file_name = "DD_full_data_Lsd_20.dat"
 train_data = np.loadtxt(file_name)
 
@@ -194,33 +194,35 @@ tic = time.time()
 log_file = open('log_1D_Poi_Cont.txt', 'w')
 
 # Define parameters
-Lsd = 20
 Vd_list = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
 Nsd_list = [1e-2]
 Nch_list = [1e-4]
 Vd_input_list = jnp.vstack([jnp.linspace(0, Vd, 501) for Vd in Vd_list])
 sample_list = jnp.array(list(itertools.product(Vd_list, Nsd_list, Nch_list)))
 Nsample = len(sample_list)
+Lsd = 20
 Lch = 30
 L = Lch + 2 * Lsd
 Nsd_max = (np.array(Nsd_list)).max()
 Nsd_min = (np.array(Nch_list)).min()
-
 interface_idx = round(Lsd / (dx * L))
 
+# Define doping profile
 Nd_input_list = np.zeros((501, Nsample))
-
 for i in range(Nsample):
     Nd_input_list[:, i] = sample_list[i, 1] # Nsd
     Nd_input_list[interface_idx+1:501 - interface_idx, i] = sample_list[i, 2] # Nch
 
 Nd_input_list = jnp.array(  ( np.log(Nd_input_list) - np.log(Nsd_min) )  / (np.log(Nsd_max) - np.log(Nsd_min))  )
 
+# Get training data
 train_pot_list, train_charge_list = get_train_profile(train_data, sample_list)
 
+# Set batch size
 batch_size = Nsample
-    
 isample_rand_list = np.array(range(0, Nsample))
+
+# Start training
 it = 0
 while True:
 
@@ -228,15 +230,16 @@ while True:
         break
     
     isample = it % batch_size
+
+    # Randomly shuffle data
     if isample == 0:
         random.shuffle(isample_rand_list)
-            
+
+    # Define input parameters
     Vd = sample_list[isample_rand_list[isample], 0]
     Nsd = sample_list[isample_rand_list[isample], 1]
-    Nch = sample_list[isample_rand_list[isample], 2]
-    
-    Nd = Nd_input_list[:, isample_rand_list[isample]]
-    
+    Nch = sample_list[isample_rand_list[isample], 2]    
+    Nd = Nd_input_list[:, isample_rand_list[isample]]    
     Vd_input = Vd_input_list[round(Vd / 0.2), :]
     
     # Get training data 
@@ -247,7 +250,8 @@ while True:
 
     for i in range(0, 1000):
         params, state = step(params, state, x, Nd, Vd_input, train_charge_list, train_pot_list, Nsd, Vd)
-    
+
+    # Calculate losses 
     MSE_cont_val = mse_cont(params, x, Nd, Vd_input)
     MSE_poi_val = mse_poi(params, x, Nd, Vd_input)
     MSE_bc_val = mse_bc(params, x, Nd, Vd_input, Nsd, Vd)
@@ -255,6 +259,7 @@ while True:
     pinn_loss = state.value
     loss_traj.append(pinn_loss)
 
+    # Output losses
     log_msg= f"Nsd: {Nsd:.1e}, Nch: {Nch:.1e}, Vd: {Vd:.2f} it: {it}, loss: {pinn_loss:.5e} mse_cont: {MSE_cont_val:.5e}, mse_poi: {MSE_poi_val:.5e}, mse_bc: {MSE_bc_val:.5e}, mse_data: {MSE_data_val:.5e}"
     print(log_msg)
     log_file.write(log_msg)
@@ -270,7 +275,7 @@ log_file.write("Elapsed time = {} s\n".format(toc - tic))
 log_file.close()
 print("Elapsed time = {} s".format(toc - tic))
 
-# Save loss_trajectory and trained params 
+# Save loss_trajectory and trained params (Modify directory accordingly)
 with open('loss_traj_1D_Poi_Cont.pkl', 'wb') as f:
     pickle.dump(loss_traj, f)
 
