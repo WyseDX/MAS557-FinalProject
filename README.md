@@ -3,7 +3,7 @@ Please install the following packages to run the python codes: jax, jaxopt, matp
 
 PINN Model: "1D_Poi_Cont.py"
 --------------------------------------------------
-A 5 hidden layer PINN model used to solve the Poission & Continuity equations simultaneously.
+A 4 hidden layer PINN model used to solve the Poission & Continuity equations simultaneously.
 Input layer consists of the positional coordinates x, and applied voltage profile Va.
 
 
