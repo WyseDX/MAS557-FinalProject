@@ -9,8 +9,10 @@ import pickle
 import os
 import random
 import itertools
-os.environ['CUDA_VISIBLE_DEVICES'] = "0"
-os.environ["XLA_PYTHON_CLIENT_MEM_FRACTION"] = "0.5"
+
+# Uncomment and modify the below variables accordingly depending on available resources
+# os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+# os.environ["XLA_PYTHON_CLIENT_MEM_FRACTION"] = "0.5"
 
 jax.config.update("jax_enable_x64", True)
 seed = jr.PRNGKey(0)
