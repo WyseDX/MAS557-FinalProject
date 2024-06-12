@@ -35,9 +35,11 @@ Next 501 columns: charge profile<br/>
 
 Raw data combined: "DD_full_data_Lsd_20.dat"<br/>
 --------------------------------------------------
-1st column: Nsd<br/>
-@@ -15,3 +29,5 @@ Raw data combined: "DD_full_data_Lsd_20.dat"<br/>
-5th column: Id<br/>
+1st column: Nsd
+2nd column: Nch
+3rd column: Lch
+4th column: Vd
+5th column: Id
 Next 501 columns: potential profile<br/>
 Next 501 columns: charge profile<br/>
 
