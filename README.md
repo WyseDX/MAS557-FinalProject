@@ -16,7 +16,7 @@ Refined PINN Model: "1D_Poi_Cont_with_interface_BC.py"
 Refined PINN model accounting for potential and charge continuity at source/channel and channel/drain interfaces.
 
 
-Post Process: "1D_Poi_Cont-post-process.ipynb"
+Post Processing: "1D_Poi_Cont-post-process.ipynb"
 --------------------------------------------------
 Data post processing: check predicted charge & potential profiles, loss trajectory, calculate losses and current.
 
