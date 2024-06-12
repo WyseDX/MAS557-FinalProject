@@ -26,6 +26,7 @@ T = 300
 KT_Q = BOLTZ * T / ELEM_Q
 NI = 1e10 * 1e-21
 
+# Define MLP
 def MLP(layers: list[int] = [1, 64, 1], activation: callable = jnp.tanh):
     def init_params(key):
         def _init(key, d_in, d_out):
@@ -47,10 +48,12 @@ def MLP(layers: list[int] = [1, 64, 1], activation: callable = jnp.tanh):
 
     return init_params, apply
 
+# Initialize MLP and params
 key, subkey = jr.split(seed)
 init_params, apply = MLP([2, 100, 100, 100, 100, 2])
 params = init_params(subkey)
 
+# Define pinn and derivatives
 @jax.jit
 def pinn(params, x, Nd, Vd_vec):
     V_contact = KT_Q * jnp.log(Nsd / NI)
@@ -68,6 +71,7 @@ def pinn_x(params, x, Nd, Vd_vec):
 def pinn_xx(params, x, Nd, Vd_vec):
     return jax.jacfwd(pinn_x, 1)(params, x, Nd, Vd_vec) / L
 
+# Funcion to numerically find the derivative
 @jax.jit
 def compute_derivatives(f, delta_X):
     # Compute the first derivative using central differences for internal points
@@ -79,6 +83,7 @@ def compute_derivatives(f, delta_X):
 
     return df
 
+# Define loss functions
 @jax.jit
 def mse_cont(params, x, Nd, Vd_vec):
     pred =  jax.vmap(pinn, in_axes=(None, 0, 0, 0 ))(params, x, Nd, Vd_vec)
@@ -144,6 +149,7 @@ def loss(params, x, Nd, Vd_vec, train_charge_list, train_pot_list, Nsd, Vd):
     loss = mse_total(params, x, Nd, Vd_vec, train_charge_list, train_pot_list, Nsd, Vd)
     return loss
 
+# Initialize x and dx
 x = jnp.linspace(0, 1, 501)
 dx = x[1] - x[0]
 opt = jaxopt.LBFGS(loss, history_size=50 )
@@ -153,6 +159,7 @@ def step(params, state, x, Nd, Vd_vec, train_charge_list, train_pot_list, Nsd, V
     params, state = opt.update(params, state, x, Nd, Vd_vec, train_charge_list, train_pot_list, Nsd, Vd)
     return params, state
 
+# Get training data from numerical data
 def get_train_profile(train_data, Vd_list):
     
     train_pot_list = np.zeros((501, Nsample))
@@ -172,25 +179,28 @@ def get_train_profile(train_data, Vd_list):
     return jnp.array(train_pot_list), jnp.array(train_charge_list)
 
 
-# Import training data
+# Import training data (Need to specify the correct directory to run this)
 file_name = "DD_full_data_Lsd_20.dat"
 train_data = np.loadtxt(file_name)
 
+# Start training
 loss_traj = []
 print("LBFGS running...")
 tic = time.time()
 
-Lsd = 20
+
+
+# Output log file
 log_file = open('log_1D_Poi_Cont.txt', 'w')
 
+# Define parameters
+Lsd = 20
 Vd_list = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
 Nsd_list = [1e-2]
 Nch_list = [1e-4]
 Vd_input_list = jnp.vstack([jnp.linspace(0, Vd, 501) for Vd in Vd_list])
 sample_list = jnp.array(list(itertools.product(Vd_list, Nsd_list, Nch_list)))
 Nsample = len(sample_list)
-it = 0
-
 Lch = 30
 L = Lch + 2 * Lsd
 Nsd_max = (np.array(Nsd_list)).max()
@@ -211,7 +221,7 @@ train_pot_list, train_charge_list = get_train_profile(train_data, sample_list)
 batch_size = Nsample
     
 isample_rand_list = np.array(range(0, Nsample))
-
+it = 0
 while True:
 
     if it >= 20 * batch_size:
