@@ -217,7 +217,7 @@ print("LBFGS running...")
 tic = time.time()
 
 # Output log file (change directory accordingly)
-log_file = open('log_1D_Poi_Cont_with_Neumann_BC.txt', 'w')
+log_file = open('log_1D_Poi_Cont_with_interface_BC.txt', 'w')
 
 # Define parameters
 Vd_list = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
@@ -308,8 +308,8 @@ log_file.close()
 print("Elapsed time = {} s".format(toc - tic))
 
 # Save loss_trajectory and trained params (Change directory accordingly)
-with open('loss_traj_1D_Poi_Cont_with_Neumann_BC.pkl', 'wb') as f:
+with open('loss_traj_1D_Poi_Cont_with_interface_BC.pkl', 'wb') as f:
     pickle.dump(loss_traj, f)
 
-with open('params_1D_Poi_Cont_with_Neumann_BC.pkl', 'wb') as f:
+with open('params_1D_Poi_Cont_with_interface_BC.pkl', 'wb') as f:
     pickle.dump(params, f)
